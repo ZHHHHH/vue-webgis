@@ -200,21 +200,56 @@ var baseMap = [
   // }
 ];
 
-export function initMap(iconLayers) {
+export function initMap(iconLayers, searchControl) {
   var map = L.map("map", {
     center: [39.54, 116.23],
     zoom: 8,
     zoomControl: true,
     attributionControl: false
   });
+
+  AddMapTool(map, iconLayers);
+  map.addControl(searchControl);
+
+  return map;
+}
+
+//添加地图工具
+function AddMapTool(map, iconLayers) {
   //添加比例尺
   L.control.scale({ position: "bottomright" }).addTo(map);
   //添加鼠标位置控件
   L.control.mousePosition().addTo(map);
+  //添加导航栏
+  L.control
+    .navbar({
+      position: "topleft",
+      forwardTitle: "返回前一视图",
+      backTitle: "返回后一视图",
+      homeTitle: "返回默认视图"
+    })
+    .addTo(map);
+  //添加定位
+  L.control
+    .locate({
+      position: "topleft",
+      strings: {
+        title: "定位至当前所在位置",
+        metersUnit: "米",
+        feetUnit: "英尺",
+        popup: "你距离到这点不到{distance}{unit}"
+      }
+    })
+    .addTo(map);
+  //添加全屏
+  map.addControl(
+    new L.Control.Fullscreen({ title: { false: "进入全屏", true: "退出全屏" } })
+  );
   //添加鹰眼图;
   var minimap = L.control.minimap(createBaseMap("TianDiTu.Normal.Map", key), {
     position: "bottomright",
     toggleDisplay: true,
+    zoomAnimation: true,
     width: 400,
     height: 250
   });
@@ -232,8 +267,6 @@ export function initMap(iconLayers) {
     );
     minimap.changeLayer(baselayer);
   });
-
-  return map;
 }
 
 //创建底图

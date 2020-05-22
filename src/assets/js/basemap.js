@@ -1,5 +1,7 @@
+import "leaflet.chinatmsproviders";
+
 //天地图密钥
-var key = "a74f08d0fd4435dd072196ef706aa4d3";
+export var key = "a74f08d0fd4435dd072196ef706aa4d3";
 
 //--------------------------地图底图类型---------------------------//
 //天地图底图类型
@@ -125,7 +127,7 @@ var baidu_streets = L.layerGroup([BaiduNormalMap]),
   baiud_satellite = L.layerGroup([BaiduSatelliteMap, BaiduSatelliteAnnotion]);
 
 //----------------------切换基础底图配置--------------------//
-var baseMap = [
+export var baseMap = [
   {
     title: "天地图(街道)",
     layer: tianditu_streets,
@@ -200,77 +202,8 @@ var baseMap = [
   // }
 ];
 
-export function initMap(iconLayers, searchControl) {
-  var map = L.map("map", {
-    center: [39.54, 116.23],
-    zoom: 8,
-    zoomControl: true,
-    attributionControl: false
-  });
-
-  AddMapTool(map, iconLayers);
-  map.addControl(searchControl);
-
-  return map;
-}
-
-//添加地图工具
-function AddMapTool(map, iconLayers) {
-  //添加比例尺
-  L.control.scale({ position: "bottomright" }).addTo(map);
-  //添加鼠标位置控件
-  L.control.mousePosition().addTo(map);
-  //添加导航栏
-  L.control
-    .navbar({
-      position: "topleft",
-      forwardTitle: "返回前一视图",
-      backTitle: "返回后一视图",
-      homeTitle: "返回默认视图"
-    })
-    .addTo(map);
-  //添加定位
-  L.control
-    .locate({
-      position: "topleft",
-      strings: {
-        title: "定位至当前所在位置",
-        metersUnit: "米",
-        feetUnit: "英尺",
-        popup: "你距离到这点不到{distance}{unit}"
-      }
-    })
-    .addTo(map);
-  //添加全屏
-  map.addControl(
-    new L.Control.Fullscreen({ title: { false: "进入全屏", true: "退出全屏" } })
-  );
-  //添加鹰眼图;
-  var minimap = L.control.minimap(createBaseMap("TianDiTu.Normal.Map", key), {
-    position: "bottomright",
-    toggleDisplay: true,
-    zoomAnimation: true,
-    width: 400,
-    height: 250
-  });
-  minimap.addTo(map);
-  //添加底图切换功能
-  var iconLayersControl = iconLayers(baseMap, {
-    maxLayersInRow: 4,
-    position: "bottomleft"
-  });
-  iconLayersControl.addTo(map);
-  iconLayersControl.on("activelayerchange", function(e) {
-    var baselayer = createBaseMap(
-      e.target._layers[e.target._activeLayerId].baseType,
-      key
-    );
-    minimap.changeLayer(baselayer);
-  });
-}
-
 //创建底图
-function createBaseMap(MapType, key, maxZoom, minZoom) {
+export function createBaseMap(MapType, key, maxZoom, minZoom) {
   return L.tileLayer.chinaProvider(MapType, {
     key,
     maxZoom: maxZoom != null ? maxZoom : 18,

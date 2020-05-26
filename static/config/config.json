@@ -1,0 +1,173 @@
+{
+  "map": {
+    "zoom": 8,
+    "center": {
+      "x": 39.54,
+      "y": 116.23
+    },
+    "minZoom": 3,
+    "maxZoom": 18,
+    "centerAutoLevel": 15,
+    "copyright": false,
+    "key": "a74f08d0fd4435dd072196ef706aa4d3",
+    "controls": [
+      {
+        "type": "mousePosition",
+        "position": "bottomleft",
+        "visible": true
+      },
+      {
+        "type": "minimap",
+        "position": "bottomright",
+        "visible": true
+      },
+      {
+        "type": "scale",
+        "position": "bottomleft",
+        "visible": true
+      },
+      {
+        "type": "iconLayers",
+        "position": "bottomleft",
+        "visible": true
+      },
+      {
+        "type": "navbar",
+        "position": "topleft",
+        "visible": true
+      },
+      {
+        "type": "locate",
+        "position": "topleft",
+        "visible": true
+      },
+      {
+        "type": "fullscreen",
+        "position": "topleft",
+        "visible": true
+      },
+      {
+        "type": "geoSearch",
+        "position": "topleft",
+        "visible": true
+      }
+    ],
+    "basemaps": [
+      {
+        "name": "天地图(街道)",
+        "type": "TianDiTu.Normal.Map",
+        "visible": true,
+        "icon": "/static/img/tianditumap.png",
+        "annotion": {
+          "type": "TianDiTu.Normal.Annotion",
+          "visible": true
+        }
+      },
+      {
+        "name": "天地图(卫星)",
+        "type": "TianDiTu.Satellite.Map",
+        "icon": "/static/img/tiandituimage.png",
+        "visible": true,
+        "annotion": {
+          "type": "TianDiTu.Satellite.Annotion",
+          "visible": true
+        }
+      },
+      {
+        "name": "天地图(地形)",
+        "type": "TianDiTu.Terrain.Map",
+        "icon": "/static/img/tianditudem.png",
+        "visible": true,
+        "annotion": {
+          "type": "TianDiTu.Terrain.Annotion",
+          "visible": true
+        }
+      },
+      {
+        "name": "Google(街道)",
+        "type": "Google.Normal.Map",
+        "icon": "/static/img/googlemap.png",
+        "visible": true
+      },
+      {
+        "name": "Google(卫星)",
+        "type": "Google.Satellite.Map",
+        "icon": "/static/img/googleimage.png",
+        "visible": true,
+        "annotion": {
+          "type": "Google.Satellite.Annotion",
+          "visible": true
+        }
+      },
+      {
+        "name": "高德地图(街道)",
+        "type": "GaoDe.Normal.Map",
+        "icon": "/static/img/baidumap.png",
+        "visible": true
+      },
+      {
+        "name": "高德地图(卫星)",
+        "type": "GaoDe.Satellite.Map",
+        "icon": "",
+        "visible": false,
+        "annotion": {
+          "type": "GaoDe.Satellite.Annotion",
+          "visible": true
+        }
+      },
+      {
+        "name": "Arcgis(街道)",
+        "type": "Arcgis.Normal.Map",
+        "icon": "/static/img/arcgis-street.png",
+        "visible": true
+      },
+      {
+        "name": "Arcgis(卫星)",
+        "type": "Arcgis.Satellite.Map",
+        "icon": "/static/img/bingimage.png",
+        "visible": false,
+        "annotion": {
+          "type": "Arcgis.Satellite.Annotion",
+          "visible": true
+        }
+      },
+      {
+        "name": "Geoq(街道)",
+        "type": "Geoq.Normal.Map",
+        "icon": "",
+        "visible": false
+      },
+      {
+        "name": "OSM(街道)",
+        "type": "OSM.Normal.Map",
+        "icon": "/static/img/osm.png",
+        "visible": true
+      },
+      {
+        "name": "百度(街道)",
+        "type": "Baidu.Normal.Map",
+        "icon": "/static/img/baidumap.png",
+        "visible": false
+      },
+      {
+        "name": "百度(卫星)",
+        "type": "Baidu.Satellite.Map",
+        "icon": "/static/img/baiduimage.png",
+        "visible": false,
+        "annotion": {
+          "type": "Baidu.Satellite.Annotion",
+          "visible": true
+        }
+      }
+    ],
+    "operationallayers": [
+      {
+        "name": "世界地图",
+        "type": "arcgis_dynamic",
+        "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer",
+        "opacity": 1,
+        "visible": true
+      }
+    ]
+  }
+}

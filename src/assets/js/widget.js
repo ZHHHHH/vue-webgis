@@ -8,6 +8,7 @@ import "leaflet-toolbar/dist/leaflet.toolbar.css";
 import "leaflet-geosearch/assets/css/leaflet.css";
 import "../plug/leaflet-iconlayers/iconLayers.css";
 
+import store from "@/store";
 import "../plug/L.Control.MousePosition/L.Control.MousePosition.js";
 import "leaflet-minimap";
 import "leaflet-navbar";
@@ -16,23 +17,21 @@ import "leaflet.locatecontrol";
 import "leaflet-toolbar";
 import iconLayers from "../plug/leaflet-iconlayers/iconLayers.js";
 import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
-import { baseMap } from "../js/basemap.js";
-import store from "@/store";
-import { createBaseMap, key } from "../js/basemap.js";
+import { createBaseMap, baseMap } from "./main";
 
 //添加比例尺
-export function addScale() {
-  L.control.scale({ position: "bottomleft" }).addTo(store.state.map);
+export function addScale(position) {
+  L.control.scale({ position: position }).addTo(store.state.map);
 }
 //添加鼠标位置控件
-export function addMousePosition() {
-  L.control.mousePosition({ position: "bottomleft" }).addTo(store.state.map);
+export function addMousePosition(position) {
+  L.control.mousePosition({ position: position }).addTo(store.state.map);
 }
 //添加导航栏
-export function addNavbar() {
+export function addNavbar(position) {
   L.control
     .navbar({
-      position: "topleft",
+      position: position,
       forwardTitle: "返回前一视图",
       backTitle: "返回后一视图",
       homeTitle: "返回默认视图"
@@ -40,10 +39,10 @@ export function addNavbar() {
     .addTo(store.state.map);
 }
 //添加定位
-export function addLocate() {
+export function addLocate(position) {
   L.control
     .locate({
-      position: "topleft",
+      position: position,
       strings: {
         title: "定位至当前所在位置",
         metersUnit: "米",
@@ -54,19 +53,19 @@ export function addLocate() {
     .addTo(store.state.map);
 }
 //添加全屏
-export function addFullscreen() {
+export function addFullscreen(position) {
   store.state.map.addControl(
     new L.Control.Fullscreen({
-      title: { false: "进入全屏", true: "退出全屏" }
+      title: { false: "进入全屏", true: "退出全屏" },
+      position: position
     })
   );
 }
-
 //添加鹰眼图;
 let minimap;
-export function addMinimap() {
-  minimap = L.control.minimap(createBaseMap("TianDiTu.Normal.Map", key), {
-    position: "bottomright",
+export function addMinimap(position, config) {
+  minimap = L.control.minimap(createBaseMap("TianDiTu.Normal.Map", config), {
+    position: position,
     toggleDisplay: true,
     zoomAnimation: true,
     width: 400,
@@ -75,7 +74,7 @@ export function addMinimap() {
   minimap.addTo(store.state.map);
 }
 //添加搜索功能
-export function AddGeoSearch() {
+export function AddGeoSearch(position) {
   const searchControl = new GeoSearchControl({
     style: "button",
     showMarker: true,
@@ -85,23 +84,23 @@ export function AddGeoSearch() {
     autoClose: true,
     autoComplete: true,
     keepResult: true,
-    provider: new OpenStreetMapProvider()
+    provider: new OpenStreetMapProvider(),
+    position: position
   });
 
   store.state.map.addControl(searchControl);
 }
-
 //添加底图切换功能
-export function AddiconLayers() {
+export function AddiconLayers(position, config) {
   var iconLayersControl = iconLayers(baseMap, {
     maxLayersInRow: 4,
-    position: "bottomleft"
+    position: position
   });
   iconLayersControl.addTo(store.state.map);
   iconLayersControl.on("activelayerchange", function(e) {
     var baselayer = createBaseMap(
       e.target._layers[e.target._activeLayerId].baseType,
-      key
+      config
     );
     minimap.changeLayer(baselayer);
   });

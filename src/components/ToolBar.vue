@@ -34,6 +34,9 @@
       <el-tree
         :data="data"
         :props="defaultProps"
+        node-key="id"
+        ref="tree"
+        @check-change="checkchange"
         :default-checked-keys="defaultcheckedkeys"
         icon-class="el-icon-platform-eleme"
         show-checkbox
@@ -46,7 +49,11 @@
 <script>
 import "jspanel4/dist/jspanel.min.css";
 import { JsPanel } from "vue-js-panel";
-import { TreeData, defaultcheckedkeys } from "../assets/js/layer.js";
+import {
+  TreeData,
+  defaultcheckedkeys,
+  changeLayer
+} from "../assets/js/layer.js";
 
 export default {
   data() {
@@ -78,7 +85,23 @@ export default {
   components: {
     JsPanel
   },
-  methods: {}
+  mounted() {},
+  methods: {
+    checkchange: function(node, Checked, childChecked) {
+      let nodes = null;
+      if (node.hasOwnProperty("layerId")) {
+        console.log(this.$refs.tree.getHalfCheckedNodes().concat(node));
+        let pnode = this.$refs.tree.getHalfCheckedNodes().concat(node)[0];
+        let checknode = this.$refs.tree.getCheckedNodes(true);
+        nodes = checknode.filter(x => {
+          return pnode.children.some(y => {
+            return x.id == y.id;
+          });
+        });
+      }
+      changeLayer(node, Checked, nodes);
+    }
+  }
 };
 </script>
 

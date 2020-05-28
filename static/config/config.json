@@ -162,31 +162,57 @@
     ],
     "operationallayers": [
       {
+        "id": 1,
+        "name": "矢量数据",
+        "type": "folder"
+      },
+      {
+        "id": 2,
+        "name": "栅格数据",
+        "type": "folder"
+      },
+      {
+        "id": 3,
+        "pid": 2,
+        "name": "子目录",
+        "type": "folder"
+      },
+      {
+        "pid": 1,
         "name": "世界地图",
         "type": "arcgis_dynamic",
-        "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer",
-        "opacity": 1,
+        "options": {
+          "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer",
+          "opacity": 1,
+          "layers": [0, 1, 2]
+        },
         "visible": false
       },
       {
+        "pid": 1,
         "name": "要素图层",
         "type": "arcgis_feature",
-        "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer/1",
-        "visible": false
+        "options": {
+          "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer/1"
+        },
+        "visible": true
       },
       {
+        "pid": 1,
         "name": "切片地图",
         "type": "tms",
         "url": "http://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}",
         "visible": false
       },
       {
+        "pid": 2,
         "name": "GeoJson地图",
         "type": "geojson",
-        "url": "/static/JBNT440106.json",
-        "visible": false
+        "url": "/static/data/JBNT440106.json",
+        "visible": true
       },
       {
+        "pid": 2,
         "name": "网络地图服务",
         "type": "wms",
         "url": "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi",
@@ -199,6 +225,7 @@
         "visible": false
       },
       {
+        "pid": 2,
         "name": "天地图",
         "type": "wmts",
         "url": "http://t0.tianditu.gov.cn/ter_w/wmts",

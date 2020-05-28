@@ -4,7 +4,7 @@
     <el-button-group class="toolbar">
       <el-button
         type="primary"
-        icon="el-icon-s-order"
+        icon="el-icon-s-grid"
         style="border:none;margin-right:1px;border-radius: 2px;"
         @click="visible = true"
         >地图图层</el-button
@@ -34,13 +34,16 @@
       <el-tree
         :data="data"
         :props="defaultProps"
+        :default-expand-all="true"
         node-key="id"
         ref="tree"
         @check-change="checkchange"
         :default-checked-keys="defaultcheckedkeys"
-        icon-class="el-icon-platform-eleme"
         show-checkbox
       >
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span> <img :src="data.icon" /> {{ node.label }}</span>
+        </span>
       </el-tree>
     </JsPanel>
   </div>
@@ -66,8 +69,10 @@ export default {
       },
       defaultcheckedkeys: defaultcheckedkeys,
       panelOptions: {
+        headerLogo:
+          "<li class='el-icon-s-grid' style='margin-left:8px;cursor:pointer;'></li>",
         headerTitle: "图层树目录",
-        theme: "#339999",
+        theme: "#139ceb",
         contentSize: {
           width: 220,
           height: 500
@@ -88,18 +93,14 @@ export default {
   mounted() {},
   methods: {
     checkchange: function(node, Checked, childChecked) {
-      let nodes = null;
-      if (node.hasOwnProperty("layerId")) {
-        console.log(this.$refs.tree.getHalfCheckedNodes().concat(node));
-        let pnode = this.$refs.tree.getHalfCheckedNodes().concat(node)[0];
-        let checknode = this.$refs.tree.getCheckedNodes(true);
-        nodes = checknode.filter(x => {
-          return pnode.children.some(y => {
-            return x.id == y.id;
-          });
-        });
+      if (node.layer == null) {
+        return;
       }
-      changeLayer(node, Checked, nodes);
+      let layerId = null;
+      if (node.hasOwnProperty("layerId")) {
+        layerId = node.layerId;
+      }
+      changeLayer(node, Checked, layerId);
     }
   }
 };

@@ -5,6 +5,7 @@ import "../plug/leaflet-tilelayer-wmts/leaflet-tilelayer-wmts.js";
 
 export let TreeData = [];
 export let defaultcheckedkeys = [];
+//根据配置加载图层
 export function loadLayer(config) {
   let Maps = config.operationallayers;
   for (var map in Maps) {
@@ -27,111 +28,157 @@ export function loadLayer(config) {
       case "geojson":
         loadGeoJSONService(Maps[map]);
         break;
+      case "folder":
+        setTreeData(
+          Maps[map].id,
+          Maps[map].name,
+          findParentNode(Maps[map]),
+          [],
+          null
+        );
+        break;
     }
   }
-
-  console.log(TreeData);
 }
-
-//加载arcgis地图
-function loadArcgisService(map) {
-  var dynamicMapLayer = esri.dynamicMapLayer({
-    url: map.url,
-    opacity: map.opacity
-  });
-  //获取所有图层信息
-  dynamicMapLayer.metadata(function(error, metadata) {
-    // let arryId = [];
-    // for (var i = 0; i < metadata.layers.length; i++) {
-    //   layerid.push(metadata.layers[i].id);
-    // }
-
-    var children = [];
-    for (var i = 0; i < metadata.layers.length; i++) {
-      let id = guid();
-      children.push({
-        id: id,
-        label: metadata.layers[i].name,
-        children: "",
-        layerId: metadata.layers[i].id,
-        layer: dynamicMapLayer
-      });
-
-      if (map.visible) {
-        defaultcheckedkeys.push(id);
-      }
+//切换图层
+export function changeLayer(node, isChecked, layerId) {
+  if (layerId != null) {
+    if (isChecked) {
+      node.layer.options.layers.push(layerId);
+    } else {
+      node.layer.options.layers.splice(
+        node.layer.options.layers.indexOf(layerId),
+        1
+      );
     }
-    setTreeData(guid(), map.name, children, dynamicMapLayer);
-  });
-  if (map.visible) {
-    dynamicMapLayer.addTo(store.state.map);
+    store.state.map.removeLayer(node.layer);
+    node.layer.addTo(store.state.map);
+    return;
   }
-}
-//加载arcgis要素图层
-function loadArcgisFeatureService(map) {
-  let feature = esri.featureLayer({ url: map.url });
-  if (map.visible) {
-    feature.addTo(store.state.map);
-  }
-  setTreeData(guid(), map.name, null, feature);
-}
-//加载wmts地图服务
-function loadWMTSService(map) {
-  var wmts = new L.TileLayer.WMTS(map.url, map.options);
-  if (map.visible) {
-    store.state.map.addLayer(wmts);
-  }
-  setTreeData(guid(), map.name, null, wmts);
-}
-//加载TMS地图
-function loadTMSService(map) {
-  let tile = L.tileLayer(map.url);
-  if (map.visible) {
-    tile.addTo(store.state.map);
-  }
-  setTreeData(guid(), map.name, null, tile);
-}
-//加载WMS地图
-function loadWMSService(map) {
-  var wms = L.tileLayer.wms(map.url, map.options);
-  if (map.visible) {
-    wms.addTo(store.state.map);
-  }
-  setTreeData(guid(), map.name, null, wms);
-}
-//加载GEOJSON地图
-function loadGeoJSONService(map) {
-  axios.get(map.url).then(res => {
-    var geojson = L.geoJSON(res.data, {});
-    if (map.visible) {
-      geojson.addTo(store.state.map);
-    }
-    setTreeData(guid(), map.name, null, geojson);
-  });
-}
 
-export function changeLayer(node, isChecked, nodes) {
-  if (nodes != null) {
-    let arryindex = [];
-    for (var index in nodes) {
-      arryindex.push(nodes[index].layerId);
-    }
-    node.layer.setLayers(arryindex);
-  }
   if (isChecked) {
     store.state.map.addLayer(node.layer);
   } else {
     store.state.map.removeLayer(node.layer);
   }
 }
+//加载arcgis地图
+function loadArcgisService(map) {
+  var dynamicMapLayer = esri.dynamicMapLayer(map.options);
+  if (map.visible) {
+    dynamicMapLayer.addTo(store.state.map);
+  } else {
+    dynamicMapLayer.options.layers = [];
+  }
+
+  //获取所有图层信息
+  dynamicMapLayer.metadata(function(error, metadata) {
+    var children = [];
+    for (let i = 0; i < metadata.layers.length; i++) {
+      let id = guid();
+      children.push({
+        id: id,
+        label: metadata.layers[i].name,
+        children: [],
+        layerId: metadata.layers[i].id,
+        layer: dynamicMapLayer,
+        icon: "/static/img/layer.png"
+      });
+      if (map.visible) {
+        defaultcheckedkeys.push(id);
+      }
+    }
+    setTreeData(guid(), map.name, findParentNode(map), children, null);
+  });
+}
+//加载arcgis要素图层
+function loadArcgisFeatureService(map) {
+  let feature = esri.featureLayer(map.options);
+  let id = guid();
+  setTreeData(id, map.name, findParentNode(map), [], feature, "layer.png");
+  if (map.visible) {
+    feature.addTo(store.state.map);
+    defaultcheckedkeys.push(id);
+  }
+}
+//加载wmts地图服务
+function loadWMTSService(map) {
+  var wmts = new L.TileLayer.WMTS(map.url, map.options);
+  let id = guid();
+  setTreeData(id, map.name, findParentNode(map), [], wmts, "layer.png");
+  if (map.visible) {
+    store.state.map.addLayer(wmts);
+    defaultcheckedkeys.push(id);
+  }
+}
+//加载TMS地图
+function loadTMSService(map) {
+  let tile = L.tileLayer(map.url);
+  let id = guid();
+  setTreeData(id, map.name, findParentNode(map), [], tile, "layer.png");
+  if (map.visible) {
+    tile.addTo(store.state.map);
+    defaultcheckedkeys.push(id);
+  }
+}
+//加载WMS地图
+function loadWMSService(map) {
+  var wms = L.tileLayer.wms(map.url, map.options);
+  let id = guid();
+  setTreeData(id, map.name, findParentNode(map), [], wms, "layer.png");
+  if (map.visible) {
+    wms.addTo(store.state.map);
+    defaultcheckedkeys.push(id);
+  }
+}
+//加载GEOJSON地图
+function loadGeoJSONService(map) {
+  axios.get(map.url).then(res => {
+    var geojson = L.geoJSON(res.data, {});
+    let id = guid();
+    setTreeData(id, map.name, findParentNode(map), [], geojson, "layer.png");
+    if (map.visible) {
+      geojson.addTo(store.state.map);
+      defaultcheckedkeys.push(id);
+    }
+  });
+}
+//找到父节点
+function findParentNode(map) {
+  if (map.pid != null) {
+    for (var index in TreeData) {
+      if (TreeData[index].id == map.pid) {
+        return TreeData[index].children;
+      }
+    }
+  }
+  return TreeData;
+}
+//找到父节点
+function findParentNode1(map, data) {
+  if (data == null) {
+    data = TreeData;
+  }
+  if (map.pid != null) {
+    for (var index in data) {
+      if (data[index].id == map.pid) {
+        return data[index].children;
+      }
+      return findParentNode(map, data.children);
+    }
+  }
+  return TreeData;
+}
 
 //构造图层目录树数据
-function setTreeData(id, label, children, layer) {
-  TreeData.push({
+function setTreeData(id, label, parent, children, layer, icon) {
+  icon = icon == null ? "folder.png" : icon;
+  parent.push({
     id: id,
     label: label,
     children: children,
-    layer: layer
+    layer: layer,
+    icon: "/static/img/" + icon
   });
 }
 //生成唯一值

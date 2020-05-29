@@ -64,33 +64,34 @@ export function createBaseMap(type, config) {
 export function loadWidget(config) {
   let controls = config.controls;
   for (var control in controls) {
-    if (controls[control].visible) {
-      switch (controls[control].type) {
-        case "scale":
-          addScale(controls[control].position);
-          break;
-        case "mousePosition":
-          addMousePosition(controls[control].position);
-          break;
-        case "navbar":
-          addNavbar(controls[control].position);
-          break;
-        case "locate":
-          addLocate(controls[control].position);
-          break;
-        case "fullscreen":
-          addFullscreen(controls[control].position);
-          break;
-        case "minimap":
-          addMinimap(controls[control].position, config);
-          break;
-        case "geoSearch":
-          AddGeoSearch(controls[control].position);
-          break;
-        case "iconLayers":
-          AddiconLayers(controls[control].position, config);
-          break;
-      }
+    if (!controls[control].visible) {
+      continue;
+    }
+    switch (controls[control].type) {
+      case "scale":
+        addScale(controls[control]);
+        break;
+      case "mousePosition":
+        addMousePosition(controls[control]);
+        break;
+      case "navbar":
+        addNavbar(controls[control]);
+        break;
+      case "locate":
+        addLocate(controls[control]);
+        break;
+      case "fullscreen":
+        addFullscreen(controls[control]);
+        break;
+      case "minimap":
+        addMinimap(controls[control], config);
+        break;
+      case "geoSearch":
+        AddGeoSearch(controls[control]);
+        break;
+      case "iconLayers":
+        AddiconLayers(controls[control], config);
+        break;
     }
   }
 }

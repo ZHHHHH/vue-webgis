@@ -144,34 +144,28 @@ function loadGeoJSONService(map) {
   });
 }
 //找到父节点
-function findParentNode(map) {
+function findParentNode(map, data) {
   if (map.pid != null) {
-    for (var index in TreeData) {
-      if (TreeData[index].id == map.pid) {
-        return TreeData[index].children;
+    for (let index in data == null ? TreeData : data) {
+      if ((data == null ? TreeData : data)[index].id == map.pid) {
+        return (data == null ? TreeData : data)[index].children;
+      }
+      if ((data == null ? TreeData : data)[index].children.length > 0) {
+        let result = findParentNode(
+          map,
+          (data == null ? TreeData : data)[index].children
+        );
+        if (result != null) {
+          return result;
+        }
       }
     }
   }
-  return TreeData;
-}
-//找到父节点
-function findParentNode1(map, data) {
-  if (data == null) {
-    data = TreeData;
-  }
-  if (map.pid != null) {
-    for (var index in data) {
-      if (data[index].id == map.pid) {
-        return data[index].children;
-      }
-      return findParentNode(map, data.children);
-    }
-  }
-  return TreeData;
 }
 
 //构造图层目录树数据
 function setTreeData(id, label, parent, children, layer, icon) {
+  parent = parent == null ? TreeData : parent;
   icon = icon == null ? "folder.png" : icon;
   parent.push({
     id: id,

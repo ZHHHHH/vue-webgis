@@ -1,0 +1,29 @@
+{
+  "tools": [
+    {
+      "id": 0,
+      "name": "地图测量",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "id": 1,
+      "name": "坐标定位",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "id": 3,
+      "name": "属性查询",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "id": 4,
+      "name": "属性查询",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "id": 5,
+      "name": "属性查询",
+      "icon": "el-icon-s-grid"
+    }
+  ]
+}

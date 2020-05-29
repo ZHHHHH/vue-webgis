@@ -13,42 +13,85 @@
     "controls": [
       {
         "type": "mousePosition",
-        "position": "bottomleft",
+        "options": {
+          "position": "bottomleft"
+        },
         "visible": true
       },
       {
         "type": "minimap",
-        "position": "bottomright",
+        "defaultType": "TianDiTu.Normal.Map",
+        "options": {
+          "position": "bottomright",
+          "toggleDisplay": true,
+          "zoomAnimation": true,
+          "width": 400,
+          "height": 250
+        },
         "visible": true
       },
       {
         "type": "scale",
-        "position": "bottomleft",
+        "options": {
+          "position": "bottomleft"
+        },
         "visible": true
       },
       {
         "type": "iconLayers",
-        "position": "bottomleft",
+        "options": {
+          "position": "bottomleft",
+          "maxLayersInRow": 4
+        },
         "visible": true
       },
       {
         "type": "navbar",
-        "position": "topleft",
+        "options": {
+          "position": "topleft",
+          "forwardTitle": "返回前一视图",
+          "backTitle": "返回后一视图",
+          "homeTitle": "返回默认视图"
+        },
         "visible": true
       },
       {
         "type": "locate",
-        "position": "topleft",
+        "options": {
+          "position": "topleft",
+          "strings": {
+            "title": "定位至当前所在位置",
+            "metersUnit": "米",
+            "feetUnit": "英尺",
+            "popup": "你距离到这点不到{distance}{unit}"
+          }
+        },
         "visible": true
       },
       {
         "type": "fullscreen",
-        "position": "topleft",
+        "options": {
+          "position": "topleft",
+          "title": {
+            "false": "进入全屏",
+            "true": "退出全屏"
+          }
+        },
         "visible": true
       },
       {
         "type": "geoSearch",
-        "position": "topleft",
+        "options": {
+          "position": "topleft",
+          "style": "button",
+          "showMarker": true,
+          "showPopup": true,
+          "searchLabel": "请输入要搜索的地方",
+          "notFoundMessage": "无结果",
+          "autoClose": true,
+          "autoComplete": true,
+          "keepResult": true
+        },
         "visible": true
       }
     ],
@@ -178,6 +221,12 @@
         "type": "folder"
       },
       {
+        "id": 4,
+        "pid": 3,
+        "name": "子目录",
+        "type": "folder"
+      },
+      {
         "pid": 1,
         "name": "世界地图",
         "type": "arcgis_dynamic",
@@ -195,7 +244,7 @@
         "options": {
           "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer/1"
         },
-        "visible": true
+        "visible": false
       },
       {
         "pid": 1,
@@ -212,7 +261,7 @@
         "visible": true
       },
       {
-        "pid": 2,
+        "pid": 3,
         "name": "网络地图服务",
         "type": "wms",
         "url": "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi",
@@ -225,7 +274,7 @@
         "visible": false
       },
       {
-        "pid": 2,
+        "pid": 4,
         "name": "天地图",
         "type": "wmts",
         "url": "http://t0.tianditu.gov.cn/ter_w/wmts",

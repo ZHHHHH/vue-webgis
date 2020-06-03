@@ -50,8 +50,8 @@ export function addMinimap(control, config) {
 }
 //添加搜索功能
 export function AddGeoSearch(control) {
+  control.options["provider"] = new OpenStreetMapProvider();
   let searchControl = new GeoSearchControl(control.options);
-  searchControl.provider = new OpenStreetMapProvider();
   store.state.map.addControl(searchControl);
 }
 //添加底图切换功能

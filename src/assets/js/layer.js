@@ -82,7 +82,7 @@ function loadArcgisService(map) {
         children: [],
         layerId: metadata.layers[i].id,
         layer: dynamicMapLayer,
-        icon: "/static/img/layer.png"
+        icon: map.icon
       });
       if (map.visible) {
         defaultcheckedkeys.push(id);
@@ -95,7 +95,7 @@ function loadArcgisService(map) {
 function loadArcgisFeatureService(map) {
   let feature = esri.featureLayer(map.options);
   let id = guid();
-  setTreeData(id, map.name, findParentNode(map), [], feature, "layer.png");
+  setTreeData(id, map.name, findParentNode(map), [], feature, map.icon);
   if (map.visible) {
     feature.addTo(store.state.map);
     defaultcheckedkeys.push(id);
@@ -105,7 +105,7 @@ function loadArcgisFeatureService(map) {
 function loadWMTSService(map) {
   var wmts = new L.TileLayer.WMTS(map.url, map.options);
   let id = guid();
-  setTreeData(id, map.name, findParentNode(map), [], wmts, "layer.png");
+  setTreeData(id, map.name, findParentNode(map), [], wmts, map.icon);
   if (map.visible) {
     store.state.map.addLayer(wmts);
     defaultcheckedkeys.push(id);
@@ -115,7 +115,7 @@ function loadWMTSService(map) {
 function loadTMSService(map) {
   let tile = L.tileLayer(map.url);
   let id = guid();
-  setTreeData(id, map.name, findParentNode(map), [], tile, "layer.png");
+  setTreeData(id, map.name, findParentNode(map), [], tile, map.icon);
   if (map.visible) {
     tile.addTo(store.state.map);
     defaultcheckedkeys.push(id);
@@ -125,7 +125,7 @@ function loadTMSService(map) {
 function loadWMSService(map) {
   var wms = L.tileLayer.wms(map.url, map.options);
   let id = guid();
-  setTreeData(id, map.name, findParentNode(map), [], wms, "layer.png");
+  setTreeData(id, map.name, findParentNode(map), [], wms, map.icon);
   if (map.visible) {
     wms.addTo(store.state.map);
     defaultcheckedkeys.push(id);
@@ -136,7 +136,7 @@ function loadGeoJSONService(map) {
   axios.get(map.url).then(res => {
     var geojson = L.geoJSON(res.data, {});
     let id = guid();
-    setTreeData(id, map.name, findParentNode(map), [], geojson, "layer.png");
+    setTreeData(id, map.name, findParentNode(map), [], geojson, map.icon);
     if (map.visible) {
       geojson.addTo(store.state.map);
       defaultcheckedkeys.push(id);
@@ -166,13 +166,13 @@ function findParentNode(map, data) {
 //构造图层目录树数据
 function setTreeData(id, label, parent, children, layer, icon) {
   parent = parent == null ? TreeData : parent;
-  icon = icon == null ? "folder.png" : icon;
+  icon = icon == null ? "/static/img/folder.png" : icon;
   parent.push({
     id: id,
     label: label,
     children: children,
     layer: layer,
-    icon: "/static/img/" + icon
+    icon: icon
   });
 }
 //生成唯一值

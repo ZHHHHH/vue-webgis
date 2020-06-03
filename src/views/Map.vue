@@ -15,12 +15,11 @@ import { createMap, loadWidget } from "../assets/js/main";
 import { loadLayer } from "../assets/js/layer.js";
 
 export default {
-  name: "map",
-  data() {
+  data () {
     return {};
   },
-  created() {},
-  mounted() {
+  created () { },
+  mounted () {
     getMapConfig().then(config => {
       createMap(config.map);
       loadWidget(config.map);

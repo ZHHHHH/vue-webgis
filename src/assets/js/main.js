@@ -1,4 +1,4 @@
-import "leaflet.chinatmsproviders";
+import "../plug/leaflet.chinatmsproviders/leaflet.ChineseTmsProviders.js";
 import store from "@/store";
 import {
   addScale,

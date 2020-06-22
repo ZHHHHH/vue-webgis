@@ -41,6 +41,7 @@ export default {
         headerLogo:
           "<li class='el-icon-s-grid' style='margin-left:8px;cursor:pointer;'></li>",
         headerTitle: "图层树目录",
+        animateIn: "jsPanelFadeIn",
         theme: "#139ceb",
         contentSize: {
           width: 220,

@@ -44,8 +44,10 @@ export function loadLayer(config) {
 export function changeLayer(node, isChecked, layerId) {
   if (layerId != null) {
     if (isChecked) {
+      defaultcheckedkeys.push(node.id);
       node.layer.options.layers.push(layerId);
     } else {
+      defaultcheckedkeys.splice(defaultcheckedkeys.indexOf(node.id), 1);
       node.layer.options.layers.splice(
         node.layer.options.layers.indexOf(layerId),
         1
@@ -57,8 +59,10 @@ export function changeLayer(node, isChecked, layerId) {
   }
 
   if (isChecked) {
+    defaultcheckedkeys.push(node.id);
     store.state.map.addLayer(node.layer);
   } else {
+    defaultcheckedkeys.splice(defaultcheckedkeys.indexOf(node.id), 1);
     store.state.map.removeLayer(node.layer);
   }
 }

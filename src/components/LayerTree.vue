@@ -17,12 +17,14 @@
         </span>
       </el-tree>
     </JsPanel>
+    <!-- <ContextMenu ref="ContextMenu" /> -->
   </div>
 </template>
 
 <script>
 import "jspanel4/dist/jspanel.min.css";
 import { JsPanel } from "vue-js-panel";
+// import ContextMenu from "../components/ContextMenu";
 import { TreeData, defaultcheckedkeys, changeLayer } from "../assets/js/layer";
 
 export default {
@@ -59,6 +61,7 @@ export default {
   },
   components: {
     JsPanel
+    // ContextMenu
   },
 
   methods: {
@@ -75,6 +78,18 @@ export default {
       }
       changeLayer(node, Checked, layerId);
     }
+    // rightClick(e, data, node, comp) {
+    //   let menu = this.$refs.ContextMenu;
+    //   menu.rightMenu = { top: e.pageY + "px", left: e.pageX + "px" };
+    //   menu.tmDisplay = true;
+    //   menu.node = node;
+    //   menu.nodedata = data;
+    //   document.onclick = function(ev) {
+    //     if (ev.target !== document.getElementById("perTreeMenu")) {
+    //       menu.tmDisplay = false;
+    //     }
+    //   };
+    // }
   }
 };
 </script>

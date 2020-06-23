@@ -20,5 +20,32 @@
       "method": "test4",
       "icon": "el-icon-s-grid"
     }
+  ],
+  "contextmenu": [
+    {
+      "name": "定位",
+      "method": "locate",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "name": "定位",
+      "method": "locate",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "name": "定位",
+      "method": "locate",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "name": "定位",
+      "method": "locate",
+      "icon": "el-icon-s-grid"
+    },
+    {
+      "name": "定位",
+      "method": "locate",
+      "icon": "el-icon-s-grid"
+    }
   ]
 }

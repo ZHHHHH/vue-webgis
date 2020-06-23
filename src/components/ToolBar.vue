@@ -7,9 +7,14 @@
         icon="el-icon-s-grid"
         style="border:none;margin-right:1px;border-radius: 2px;"
         @click="visible = true"
-      >地图图层</el-button>
+        >地图图层</el-button
+      >
       <el-dropdown trigger="click">
-        <el-button type="primary" icon="el-icon-s-tools" style="border:none;border-radius: 2px;">
+        <el-button
+          type="primary"
+          icon="el-icon-s-tools"
+          style="border:none;border-radius: 2px;"
+        >
           工具
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -23,7 +28,6 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-button-group>
-
     <LayerTree :visible.sync="visible" />
   </div>
 </template>
@@ -31,10 +35,10 @@
 <script>
 import LayerTree from "../components/LayerTree";
 import { getToolConfig } from "../assets/js/api";
-import { callModelFun } from '../assets/js/tool';
+import { callModelFun } from "../assets/js/tool";
 
 export default {
-  data () {
+  data() {
     return {
       visible: false,
       tools: []
@@ -43,16 +47,15 @@ export default {
   components: {
     LayerTree
   },
-  mounted () {
+  mounted() {
     getToolConfig().then(config => {
       this.tools = config.tools;
     });
   },
   methods: {
-    callModelFun: function (item) {
-      callModelFun(item)
+    callModelFun: function(item) {
+      callModelFun(item);
     }
-
   }
 };
 </script>

@@ -7,14 +7,9 @@
         icon="el-icon-s-grid"
         style="border:none;margin-right:1px;border-radius: 2px;"
         @click="visible = true"
-        >地图图层</el-button
-      >
+      >地图图层</el-button>
       <el-dropdown trigger="click">
-        <el-button
-          type="primary"
-          icon="el-icon-s-tools"
-          style="border:none;border-radius: 2px;"
-        >
+        <el-button type="primary" icon="el-icon-s-tools" style="border:none;border-radius: 2px;">
           工具
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -38,22 +33,22 @@ import { getToolConfig } from "../assets/js/api";
 import { callModelFun } from "../assets/js/tool";
 
 export default {
-  data() {
+  data () {
     return {
-      visible: false,
+      visible: true,
       tools: []
     };
   },
   components: {
     LayerTree
   },
-  mounted() {
+  mounted () {
     getToolConfig().then(config => {
       this.tools = config.tools;
     });
   },
   methods: {
-    callModelFun: function(item) {
+    callModelFun: function (item) {
       callModelFun(item);
     }
   }

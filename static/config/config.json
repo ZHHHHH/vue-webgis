@@ -93,6 +93,37 @@
           "keepResult": true
         },
         "visible": true
+      },
+      {
+        "type": "contextmenu",
+        "options": {
+          "contextmenu": true,
+          "contextmenuWidth": 140,
+          "contextmenuItems": [
+            {
+              "text": "移到到此处",
+              "callback": "centerMap",
+              "icon": "/static/img/finger-right.png"
+            },
+            {
+              "text": "显示此处经纬度",
+              "callback": "showCoordinates",
+              "icon": "/static/img/locate.png"
+            },
+            "-",
+            {
+              "text": "放大",
+              "callback": "zoomIn",
+              "icon": "/static/img/zoom-in.png"
+            },
+            {
+              "text": "缩小",
+              "callback": "zoomOut",
+              "icon": "/static/img/zoom-out.png"
+            }
+          ]
+        },
+        "visible": true
       }
     ],
     "basemaps": [

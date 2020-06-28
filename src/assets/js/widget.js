@@ -7,6 +7,7 @@ import "font-awesome/css/font-awesome.css";
 import "leaflet-toolbar/dist/leaflet.toolbar.css";
 import "leaflet-geosearch/assets/css/leaflet.css";
 import "../plug/leaflet-iconlayers/iconLayers.css";
+import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 
 import store from "@/store";
 import "../plug/L.Control.MousePosition/L.Control.MousePosition.js";
@@ -17,7 +18,9 @@ import "leaflet.locatecontrol";
 import "leaflet-toolbar";
 import iconLayers from "../plug/leaflet-iconlayers/iconLayers.js";
 import { OpenStreetMapProvider, GeoSearchControl } from "leaflet-geosearch";
+import "leaflet-contextmenu";
 import { createBaseMap, baseMap } from "./main";
+import { MessageBox } from "element-ui";
 
 //添加比例尺
 export function addScale(control) {
@@ -65,4 +68,40 @@ export function AddiconLayers(control, config) {
     );
     minimap.changeLayer(baselayer);
   });
+}
+//添加地图右键菜单
+export function AddContextmenu(control) {
+  for (var key in control.options.contextmenuItems) {
+    if (control.options.contextmenuItems[key]["callback"] == null) {
+      continue;
+    }
+    control.options.contextmenuItems[key]["callback"] = eval(
+      control.options.contextmenuItems[key]["callback"]
+    );
+  }
+  L.Util.setOptions(store.state.map, control.options);
+  let handler = new L.Map.ContextMenu(store.state.map);
+  handler.enable();
+
+  function showCoordinates(e) {
+    MessageBox.alert(
+      `层级：${store.state.map.getZoom()}<br/>纬度：${e.latlng.lat},经度：${
+        e.latlng.lng
+      }`,
+      "提示",
+      { dangerouslyUseHTMLString: true }
+    );
+  }
+
+  function centerMap(e) {
+    store.state.map.panTo(e.latlng);
+  }
+
+  function zoomIn(e) {
+    store.state.map.zoomIn();
+  }
+
+  function zoomOut(e) {
+    store.state.map.zoomOut();
+  }
 }

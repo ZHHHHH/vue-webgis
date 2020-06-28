@@ -8,7 +8,8 @@ import {
   addFullscreen,
   addMinimap,
   AddGeoSearch,
-  AddiconLayers
+  AddiconLayers,
+  AddContextmenu
 } from "./widget";
 //地图创建
 export function createMap(config) {
@@ -91,6 +92,9 @@ export function loadWidget(config) {
         break;
       case "iconLayers":
         AddiconLayers(controls[control], config);
+        break;
+      case "contextmenu":
+        AddContextmenu(controls[control]);
         break;
     }
   }

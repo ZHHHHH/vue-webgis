@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 body {
   margin: 0;
   padding: 0;
@@ -44,5 +44,8 @@ body {
   bottom: 0;
   right: 0;
   left: 0;
+}
+.leaflet-control-minimap {
+  opacity: 0.7;
 }
 </style>

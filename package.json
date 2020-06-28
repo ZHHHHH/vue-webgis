@@ -17,6 +17,7 @@
     "font-awesome": "^4.7.0",
     "jspanel4": "^4.10.2",
     "leaflet": "^1.6.0",
+    "leaflet-contextmenu": "^1.4.0",
     "leaflet-draw": "^1.0.4",
     "leaflet-fullscreen": "^1.0.2",
     "leaflet-geosearch": "^2.7.0",

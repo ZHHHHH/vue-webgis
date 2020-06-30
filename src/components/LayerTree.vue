@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-    <JsPanel :visible="visible" :options="panelOptions" @close="setVisible">
+    <JsPanel :visible="visible" :options="panelOptions" @close="visible=false">
       <el-tree
         :data="data"
         :props="defaultProps"
@@ -29,11 +29,9 @@ import { JsPanel } from "vue-js-panel";
 import { TreeData, defaultcheckedkeys, changeLayer } from "../assets/js/layer";
 
 export default {
-  props: {
-    visible: Boolean
-  },
   data () {
     return {
+      visible: true,
       data: TreeData,
       defaultProps: {
         children: "children",
@@ -65,9 +63,6 @@ export default {
   },
 
   methods: {
-    setVisible: function () {
-      this.$emit("update:visible", false);
-    },
     checkchange: function (node, Checked, childChecked) {
       if (node.layer == null) {
         return;

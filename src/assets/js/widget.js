@@ -26,7 +26,7 @@ import { MessageBox } from "element-ui";
 export function addScale(control) {
   L.control.scale(control.options).addTo(store.state.map);
 }
-//添加鼠标位置控件
+//添加显示经纬度控件
 export function addMousePosition(control) {
   L.control.mousePosition(control.options).addTo(store.state.map);
 }
@@ -84,13 +84,10 @@ export function AddContextmenu(control) {
   handler.enable();
 
   function showCoordinates(e) {
-    MessageBox.alert(
-      `层级：${store.state.map.getZoom()}<br/>纬度：${e.latlng.lat},经度：${
-        e.latlng.lng
-      }`,
-      "提示",
-      { dangerouslyUseHTMLString: true }
-    );
+    let msg = `层级：${store.state.map.getZoom()}<br/>经度：${e.latlng.lng.toFixed(
+      6
+    )} 纬度：${e.latlng.lat.toFixed(6)}`;
+    MessageBox.alert(msg, "提示", { dangerouslyUseHTMLString: true });
   }
 
   function centerMap(e) {

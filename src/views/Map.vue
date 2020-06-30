@@ -9,10 +9,18 @@
 import "leaflet/dist/leaflet.css";
 import store from "@/store";
 import L from "leaflet";
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import ToolBar from "@/components/ToolBar.vue";
 import { getMapConfig } from "../assets/js/api";
 import { createMap, loadWidget } from "../assets/js/main";
 import { loadLayer } from "../assets/js/layer.js";
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export default {
   data () {

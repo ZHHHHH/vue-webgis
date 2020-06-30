@@ -1,51 +1,16 @@
 {
   "tools": [
     {
-      "name": "地图测量",
-      "method": "test1",
-      "icon": "el-icon-s-grid"
-    },
-    {
       "name": "坐标定位",
-      "method": "test2",
-      "icon": "el-icon-s-grid"
+      "method": "Latlng",
+      "icon": "el-icon-s-promotion",
+      "visible": true
     },
     {
-      "name": "属性查询",
-      "method": "test3",
-      "icon": "el-icon-s-grid"
-    },
-    {
-      "name": "属性查询",
-      "method": "test4",
-      "icon": "el-icon-s-grid"
-    }
-  ],
-  "contextmenu": [
-    {
-      "name": "定位",
-      "method": "locate",
-      "icon": "el-icon-s-grid"
-    },
-    {
-      "name": "定位",
-      "method": "locate",
-      "icon": "el-icon-s-grid"
-    },
-    {
-      "name": "定位",
-      "method": "locate",
-      "icon": "el-icon-s-grid"
-    },
-    {
-      "name": "定位",
-      "method": "locate",
-      "icon": "el-icon-s-grid"
-    },
-    {
-      "name": "定位",
-      "method": "locate",
-      "icon": "el-icon-s-grid"
+      "name": "地图测量",
+      "method": "Measurement",
+      "icon": "el-icon-c-scale-to-original",
+      "visible": true
     }
   ]
 }

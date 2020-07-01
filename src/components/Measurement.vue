@@ -100,7 +100,9 @@ export default {
           label: "公顷"
         }
       ],
-      value: "公里",
+      value: "",
+      distanceValue: "公里",
+      areaValue: "平方公里",
       activeListener: false,
       polyine: null,
       polygon: null,
@@ -114,6 +116,7 @@ export default {
   },
   mounted() {
     this.options = this.distanceOptions;
+    this.value = this.distanceValue;
     L.drawLocal.draw.handlers.polygon.tooltip.start = "单击开始绘制形状";
     L.drawLocal.draw.handlers.polygon.tooltip.cont = "单击继续绘制形状";
     L.drawLocal.draw.handlers.polygon.tooltip.end =
@@ -193,12 +196,13 @@ export default {
             that.popups[that.popups.length - 1].setContent(`总长：${content}`);
           }
           keys.splice(0, keys.length);
+          distanceSum = 0;
         }
       });
     },
     Polyline: function() {
       this.options = this.distanceOptions;
-      this.value = "公里";
+      this.value = this.distanceValue;
       this.measureType = "polyline";
       if (this.polygon != null) {
         this.polygon.disable();
@@ -224,7 +228,7 @@ export default {
     },
     Polygon: function() {
       this.options = this.areaOptions;
-      this.value = "平方米";
+      this.value = this.areaValue;
       this.measureType = "polygon";
       if (this.polyine != null) {
         this.polyine.disable();
@@ -240,6 +244,11 @@ export default {
       }
     },
     SelectChange: function(value) {
+      if (this.measureType == "polyline") {
+        this.distanceValue = value;
+      } else if (this.measureType == "polygon") {
+        this.areaValue = value;
+      }
       for (let popup of this.popups) {
         let lastPosition = false;
         let content = popup.getContent();
@@ -321,6 +330,12 @@ export default {
       this.clear();
     },
     clear: function() {
+      if (this.polyine != null) {
+        this.polyine.disable();
+      }
+      if (this.polygon != null) {
+        this.polygon.disable();
+      }
       for (let popup of this.popups) {
         popup.remove();
       }

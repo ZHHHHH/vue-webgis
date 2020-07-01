@@ -7,9 +7,14 @@
         icon="el-icon-s-grid"
         style="border:none;margin-right:1px;border-radius: 2px;"
         @click="setLayerTreeVisible"
-      >地图图层</el-button>
+        >地图图层</el-button
+      >
       <el-dropdown trigger="click">
-        <el-button type="primary" icon="el-icon-s-tools" style="border:none;border-radius: 2px;">
+        <el-button
+          type="primary"
+          icon="el-icon-s-tools"
+          style="border:none;border-radius: 2px;"
+        >
           工具
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -33,13 +38,12 @@
 <script>
 import store from "@/store";
 import LayerTree from "../components/LayerTree";
-import Latlng from '../components/Latlng';
-import Measurement from '../components/Measurement';
+import Latlng from "../components/Latlng";
+import Measurement from "../components/Measurement";
 import { getToolConfig } from "../assets/js/api";
-import { callModelFun } from "../assets/js/tool";
 
 export default {
-  data () {
+  data() {
     return {
       tools: []
     };
@@ -49,25 +53,25 @@ export default {
     Latlng,
     Measurement
   },
-  mounted () {
+  mounted() {
     getToolConfig().then(config => {
       this.tools = config.tools;
     });
   },
   methods: {
-    setLayerTreeVisible: function () {
+    setLayerTreeVisible: function() {
       this.$refs.LayerTree.visible = true;
     },
-    callModelFun: function (item) {
+    callModelFun: function(item) {
       eval(`this.${item.method}()`);
     },
-    Latlng: function () {
+    Latlng: function() {
       this.$refs.Latlng.visible = true;
       let center = store.state.map.getCenter();
-      this.$refs.Latlng.lat = center.lat.toFixed(6)
-      this.$refs.Latlng.lng = center.lng.toFixed(6)
+      this.$refs.Latlng.lat = center.lat.toFixed(6);
+      this.$refs.Latlng.lng = center.lng.toFixed(6);
     },
-    Measurement: function () {
+    Measurement: function() {
       this.$refs.Measurement.visible = true;
     }
   }

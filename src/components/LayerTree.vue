@@ -1,15 +1,19 @@
 <!--  -->
 <template>
   <div>
-    <JsPanel :visible="visible" :options="panelOptions" @close="visible=false">
+    <JsPanel
+      :visible="visible"
+      :options="panelOptions"
+      @close="visible = false"
+    >
       <el-tree
         :data="data"
         :props="defaultProps"
         :default-expand-all="true"
+        :default-checked-keys="defaultcheckedkeys"
         node-key="id"
         ref="tree"
         @check-change="checkchange"
-        :default-checked-keys="defaultcheckedkeys"
         show-checkbox
       >
         <span class="custom-tree-node" slot-scope="{ node, data }">
@@ -29,9 +33,9 @@ import { JsPanel } from "vue-js-panel";
 import { TreeData, defaultcheckedkeys, changeLayer } from "../assets/js/layer";
 
 export default {
-  data () {
+  data() {
     return {
-      visible: true,
+      visible: false,
       data: TreeData,
       defaultProps: {
         children: "children",
@@ -61,9 +65,8 @@ export default {
   components: {
     JsPanel
   },
-
   methods: {
-    checkchange: function (node, Checked, childChecked) {
+    checkchange: function(node, Checked, childChecked) {
       if (node.layer == null) {
         return;
       }

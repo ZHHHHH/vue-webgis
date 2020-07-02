@@ -16,7 +16,12 @@
         >
           <template slot="prepend">纬度</template>
         </el-input>
-        <el-button type="primary" style="margin-left:35%;margin-top:10px" @click="locate">确定</el-button>
+        <el-button
+          type="primary"
+          style="margin-left:35%;margin-top:10px"
+          @click="locate"
+          >确定</el-button
+        >
       </div>
     </JsPanel>
   </div>
@@ -27,7 +32,7 @@ import store from "@/store";
 import "jspanel4/dist/jspanel.min.css";
 import { JsPanel } from "vue-js-panel";
 export default {
-  data () {
+  data() {
     return {
       visible: false,
       lat: 0,
@@ -57,18 +62,29 @@ export default {
     JsPanel
   },
   methods: {
-    locate: function () {
+    locate: function() {
+      this.closeMarker();
       let latlng = [this.lat, this.lng];
       store.state.map.setView(latlng);
-      this.marker = L.marker(latlng).addTo(store.state.map);
+      this.marker = L.marker(latlng)
+        .addTo(store.state.map)
+        .bindPopup(`经度：${this.lng} 纬度：${this.lat}`, {
+          closeButton: false,
+          autoClose: false,
+          closeOnEscapeKey: false
+        })
+        .openPopup();
     },
-    closePanel: function () {
+    closePanel: function() {
       this.visible = false;
+      this.closeMarker();
+    },
+    closeMarker: function() {
       if (this.marker != null) {
         this.marker.remove();
       }
     }
   }
-}
+};
 </script>
-<style scoped></style>
+<style scoped></style>

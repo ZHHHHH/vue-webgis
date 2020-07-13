@@ -7,35 +7,28 @@ export let TreeData = [];
 export let defaultcheckedkeys = [];
 //根据配置加载图层
 export function loadLayer(config) {
-  let Maps = config.operationallayers;
-  for (var map in Maps) {
-    switch (Maps[map].type) {
+  for (let map of config.operationallayers) {
+    switch (map.type) {
       case "arcgis_dynamic":
-        loadArcgisService(Maps[map]);
+        loadArcgisService(map);
         break;
       case "arcgis_feature":
-        loadArcgisFeatureService(Maps[map]);
+        loadArcgisFeatureService(map);
         break;
       case "wmts":
-        loadWMTSService(Maps[map]);
+        loadWMTSService(map);
         break;
       case "tms":
-        loadTMSService(Maps[map]);
+        loadTMSService(map);
         break;
       case "wms":
-        loadWMSService(Maps[map]);
+        loadWMSService(map);
         break;
       case "geojson":
-        loadGeoJSONService(Maps[map]);
+        loadGeoJSONService(map);
         break;
       case "folder":
-        setTreeData(
-          Maps[map].id,
-          Maps[map].name,
-          findParentNode(Maps[map]),
-          [],
-          null
-        );
+        setTreeData(map.id, map.name, findParentNode(map), [], null);
         break;
     }
   }

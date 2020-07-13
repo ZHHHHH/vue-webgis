@@ -71,13 +71,11 @@ export function AddiconLayers(control, config) {
 }
 //添加地图右键菜单
 export function AddContextmenu(control) {
-  for (var key in control.options.contextmenuItems) {
-    if (control.options.contextmenuItems[key]["callback"] == null) {
+  for (let contextmenuItem of control.options.contextmenuItems) {
+    if (contextmenuItem["callback"] == null) {
       continue;
     }
-    control.options.contextmenuItems[key]["callback"] = eval(
-      control.options.contextmenuItems[key]["callback"]
-    );
+    contextmenuItem["callback"] = eval(contextmenuItem["callback"]);
   }
   L.Util.setOptions(store.state.map, control.options);
   let handler = new L.Map.ContextMenu(store.state.map);

@@ -26,28 +26,24 @@ export function createMap(config) {
 export let baseMap = [];
 //获取底图信息
 function getBaseMap(config) {
-  let basemaps = config.basemaps;
-  for (let map in basemaps) {
-    if (!basemaps[map].visible) {
+  for (let map of config.basemaps) {
+    if (!map.visible) {
       continue;
     }
-    let basicmap = createBaseMap(basemaps[map].type, config);
+    let basicmap = createBaseMap(map.type, config);
     let annotionmap;
-    if (
-      basemaps[map].hasOwnProperty("annotion") &&
-      basemaps[map].annotion.visible
-    ) {
-      annotionmap = createBaseMap(basemaps[map].annotion.type, config);
+    if (map.hasOwnProperty("annotion") && map.annotion.visible) {
+      annotionmap = createBaseMap(map.annotion.type, config);
     }
 
     baseMap.push({
-      title: basemaps[map].name,
+      title: map.name,
       layer:
         annotionmap != null
           ? L.layerGroup([basicmap, annotionmap])
           : L.layerGroup([basicmap]),
-      icon: basemaps[map].icon,
-      baseType: basemaps[map].type
+      icon: map.icon,
+      baseType: map.type
     });
   }
 }
@@ -63,38 +59,37 @@ export function createBaseMap(type, config) {
 
 //加载地图工具
 export function loadWidget(config) {
-  let controls = config.controls;
-  for (var control in controls) {
-    if (!controls[control].visible) {
+  for (let control of config.controls) {
+    if (!control.visible) {
       continue;
     }
-    switch (controls[control].type) {
+    switch (control.type) {
       case "scale":
-        addScale(controls[control]);
+        addScale(control);
         break;
       case "mousePosition":
-        addMousePosition(controls[control]);
+        addMousePosition(control);
         break;
       case "navbar":
-        addNavbar(controls[control]);
+        addNavbar(control);
         break;
       case "locate":
-        addLocate(controls[control]);
+        addLocate(control);
         break;
       case "fullscreen":
-        addFullscreen(controls[control]);
+        addFullscreen(control);
         break;
       case "minimap":
-        addMinimap(controls[control], config);
+        addMinimap(control, config);
         break;
       case "geoSearch":
-        AddGeoSearch(controls[control]);
+        AddGeoSearch(control);
         break;
       case "iconLayers":
-        AddiconLayers(controls[control], config);
+        AddiconLayers(control, config);
         break;
       case "contextmenu":
-        AddContextmenu(controls[control]);
+        AddContextmenu(control);
         break;
     }
   }

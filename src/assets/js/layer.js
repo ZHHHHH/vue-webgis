@@ -97,6 +97,32 @@ function loadArcgisFeatureService(map) {
     feature.addTo(store.state.map);
     defaultcheckedkeys.push(id);
   }
+
+  var oldId;
+  feature.on('click',function(e){
+    if(oldId!=null){
+      feature.resetFeatureStyle(oldId);
+    }
+    oldId = e.layer.feature.id;
+    feature.setFeatureStyle(e.layer.feature.id, {
+      color: '#FF0000',
+      weight: 3,
+      opacity: 1
+    });
+
+    let tr="";
+    let properties=e.layer.feature.properties;
+    for(let field in properties){
+      tr+=`<tr><td>${field}</td><td>${properties[field]}</td></tr>`
+    }
+    let html=`<table><thead><th>字段</th><th>值</th></thead><tbody>${tr}<tbody></table>`;
+
+    L.popup({maxHeight:400})
+    .setLatLng(e.latlng)
+    .setContent(html)
+    .addTo(store.state.map);
+      
+  });
 }
 //加载wmts地图服务
 function loadWMTSService(map) {

@@ -1,9 +1,9 @@
 {
   "map": {
-    "zoom": 8,
+    "zoom": 18,
     "center": {
-      "x": 39.54,
-      "y": 116.23
+      "x": 28.222111,
+      "y": 117.946558
     },
     "minZoom": 3,
     "maxZoom": 18,
@@ -260,25 +260,31 @@
       },
       {
         "pid": 1,
-        "name": "世界地图",
+        "name": "zdMapServer",
         "type": "arcgis_dynamic",
         "options": {
-          "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer",
+          "url": "http://120.79.27.117:6080/arcgis/rest/services/zd/MapServer",
           "opacity": 1,
-          "layers": [0, 1, 2]
+          "layers": [1,2,3]
         },
         "icon": "/static/img/layer.png",
-        "visible": false
+        "visible": true
       },
       {
         "pid": 1,
         "name": "要素图层",
         "type": "arcgis_feature",
         "options": {
-          "url": "http://localhost:6080/arcgis/rest/services/SampleWorldCities/MapServer/1"
+          "url": "http://120.79.27.117:6080/arcgis/rest/services/zd/MapServer/0",
+          "simplifyFactor": 0.35,
+          "precision": 5,
+          "style": {
+            "color": "#A9A9A9",
+            "weight": 1
+          }
         },
         "icon": "/static/img/layer.png",
-        "visible": false
+        "visible": true
       },
       {
         "pid": 1,
